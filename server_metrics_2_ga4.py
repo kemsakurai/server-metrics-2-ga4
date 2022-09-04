@@ -110,7 +110,6 @@ def main():
     event_parameters.update(disk_usage)
     event_parameters.update(network_io)
     events = [{'name': event_type, 'params': event_parameters }]
-    print(event_parameters)
     # イベント送信
     ga.send(events)
     
