@@ -57,7 +57,6 @@ def get_memory():
 def get_cpu():
     dict = {}
     cpu_times = psutil.cpu_times()
-    print(cpu_times)
     dict.update({"cpu.user" : cpu_times.user})
     dict.update({"cpu.system" : cpu_times.system})
     dict.update({"cpu.idle" : cpu_times.idle})
@@ -100,7 +99,8 @@ def main():
     # ------------------------------------------------
     # network    
     network_io = get_net_io_counters()
-
+    # ------------------------------------------------
+    # send event
     event_type = 'server_metric'
     event_parameters = {}
     event_parameters.update(loadavg)
@@ -113,7 +113,7 @@ def main():
     # イベント送信
     ga.send(events)
     
-    
+
 if __name__ == "__main__":
     # execute only if run as a script
     main()
