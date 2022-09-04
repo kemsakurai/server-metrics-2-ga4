@@ -7,30 +7,30 @@ import psutil
 def get_net_io_counters():
     dict = {}
     counters = psutil.net_io_counters()
-    dict.update({"net_io.packets_sent": counters.packets_sent})
-    dict.update({"net_io.packets_recv": counters.packets_recv})
-    dict.update({"net_io.errin": counters.errin})
-    dict.update({"net_io.errout": counters.errout})
+    dict.update({"net_io_packets_sent": counters.packets_sent})
+    dict.update({"net_io_packets_recv": counters.packets_recv})
+    dict.update({"net_io_errin": counters.errin})
+    dict.update({"net_io_errout": counters.errout})
     return dict
     
 
 def get_disk_usage():
     dict = {}
     disk_usage = psutil.disk_usage('/')
-    dict.update({"disk_usage.total": disk_usage.total})
-    dict.update({"disk_usage.used": disk_usage.used})
-    dict.update({"disk_usage.free": disk_usage.free})
-    dict.update({"disk_usage.percent": disk_usage.percent})
+    dict.update({"disk_usage_total": disk_usage.total})
+    dict.update({"disk_usage_used": disk_usage.used})
+    dict.update({"disk_usage_free": disk_usage.free})
+    dict.update({"disk_usage_percent": disk_usage.percent})
     return dict
     
 
 def get_disk_io_counters():
     dict = {}
     counters = psutil.disk_io_counters()
-    dict.update({"disk_io.read_coumt": counters.read_count})
-    dict.update({"disk_io.write_count": counters.write_count})
-    dict.update({"disk_io.read_bytes": counters.read_bytes})
-    dict.update({"disk_io.write_bytes": counters.write_bytes})
+    dict.update({"disk_io_read_coumt": counters.read_count})
+    dict.update({"disk_io_write_count": counters.write_count})
+    dict.update({"disk_io_read_bytes": counters.read_bytes})
+    dict.update({"disk_io_write_bytes": counters.write_bytes})
     return dict
 
 def get_memory():
@@ -40,26 +40,26 @@ def get_memory():
     mem_total_mb = mem.total / 1024 / 1024
     mem_used_mb = mem.used / 1024 / 1024
     mem_available_mb = mem.available / 1024 / 1024
-    dict.update({"memory.total": mem_total_mb})
-    dict.update({"memory.used": mem_used_mb})
-    dict.update({"memory.available": mem_available_mb})
+    dict.update({"memory_total": mem_total_mb})
+    dict.update({"memory_used": mem_used_mb})
+    dict.update({"memory_available": mem_available_mb})
 
     swap = psutil.swap_memory()
     swap_total_mb = swap.total / 1024 / 1024
     swap_used_mb = swap.used / 1024 / 1024
     swap_free_mb = swap.free / 1024 / 1024
-    dict.update({"swap.total": swap_total_mb})
-    dict.update({"swap.used": swap_used_mb})
-    dict.update({"swap.free": swap_free_mb})
+    dict.update({"swap_total": swap_total_mb})
+    dict.update({"swap_used": swap_used_mb})
+    dict.update({"swap_free": swap_free_mb})
 
     return dict
 
 def get_cpu():
     dict = {}
     cpu_times = psutil.cpu_times()
-    dict.update({"cpu.user" : cpu_times.user})
-    dict.update({"cpu.system" : cpu_times.system})
-    dict.update({"cpu.idle" : cpu_times.idle})
+    dict.update({"cpu_user" : cpu_times.user})
+    dict.update({"cpu_system" : cpu_times.system})
+    dict.update({"cpu_idle" : cpu_times.idle})
     return dict
 
 def get_loadavg():
@@ -110,6 +110,7 @@ def main():
     event_parameters.update(disk_usage)
     event_parameters.update(network_io)
     events = [{'name': event_type, 'params': event_parameters }]
+    print(event_parameters)
     # イベント送信
     ga.send(events)
     
