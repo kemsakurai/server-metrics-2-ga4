@@ -1,4 +1,4 @@
-from ga4mp import Ga4mp
+from ga4mp import GtagMP
 import argparse
 import os
 import psutil
@@ -12,7 +12,7 @@ def get_net_io_counters():
     dict.update({"net_io_errin": counters.errin})
     dict.update({"net_io_errout": counters.errout})
     return dict
-    
+
 
 def get_disk_usage():
     dict = {}
@@ -27,7 +27,7 @@ def get_disk_usage():
 def get_disk_io_counters():
     dict = {}
     counters = psutil.disk_io_counters()
-    dict.update({"disk_io_read_coumt": counters.read_count})
+    dict.update({"disk_io_read_count": counters.read_count})
     dict.update({"disk_io_write_count": counters.write_count})
     dict.update({"disk_io_read_bytes": counters.read_bytes})
     dict.update({"disk_io_write_bytes": counters.write_bytes})
@@ -80,7 +80,7 @@ def main():
     args = parser.parse_args()
 
     # GA4の ライブラリAPIインスタンス生成
-    ga = Ga4mp(measurement_id = args.measurement_id, api_secret = args.api_secret, client_id=args.client_id)
+    ga = GtagMP(measurement_id = args.measurement_id, api_secret = args.api_secret, client_id=args.client_id)
     # --------------------------
     # loadavg
     loadavg = get_loadavg()
@@ -112,7 +112,6 @@ def main():
     events = [{'name': event_type, 'params': event_parameters }]
     # イベント送信
     ga.send(events)
-    
 
 if __name__ == "__main__":
     # execute only if run as a script
